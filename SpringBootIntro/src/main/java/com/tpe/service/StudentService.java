@@ -1,6 +1,7 @@
 package com.tpe.service;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDTO;
 import com.tpe.dto.UpdateStudentDTO;
 import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
@@ -51,7 +52,7 @@ public class StudentService {
 
 
         // getStudentById(id);
-        // repository.deleteById(id);
+       // repository.deleteById(id);
 
         //bu id ile öğrenci var mı?
         Student student=getStudentById(id);
@@ -79,6 +80,7 @@ public class StudentService {
         }
 
 
+        ////Entity <-- DTO
         foundStudent.setName(studentDTO.getName());
         foundStudent.setLastname(studentDTO.getLastname());
         foundStudent.setEmail(studentDTO.getEmail());
@@ -90,5 +92,44 @@ public class StudentService {
     public Page<Student> getAllStudentsByPage(Pageable pageable) {
         Page<Student> studentPage=repository.findAll(pageable);
         return studentPage;
+    }
+
+    //15-
+    public List<Student> getStudentsByGrade(Integer grade) {
+        //select * from Student where grade=100
+        //return repository.findAllByGrade(grade);
+
+        return repository.filterStudentsByGrade(grade);
+
+    }
+
+    //18-id'si verilen studentı tablodan getirelim
+    public StudentDTO getStudentByIdDto(Long id) {
+
+        Student student=getStudentById(id);
+
+        //Entity --> DTO
+        // tablodan gelen entitynin içindeki 3 datayı alıp
+        //dto objesi içine yerleştirdik
+
+
+        //StudentDTO studentDTO=new StudentDTO(student.getName(),student.getLastname(),student.getGrade());
+//        StudentDTO studentDTO=new StudentDTO();
+//        studentDTO.setName(student.getName());....
+
+
+        //yukarıdaki 2 seçenek zahmetli, bunun yerine DTO oluşturmak için
+        // constructorın parametresine Entity objesi verip dönüşümü sağlayabiliriz
+        StudentDTO studentDTO=new StudentDTO(student);
+
+        return studentDTO;
+
+    }
+
+    //18-b:repositoryden doğrudan DTO objesi getirelim
+    public StudentDTO getStudentInfoByDTO(Long id) {
+        StudentDTO studentDTO=repository.findStudentDtoById(id).
+                orElseThrow(()->new ResourceNotFoundException("Student is not found by id: "+id));
+        return studentDTO;
     }
 }

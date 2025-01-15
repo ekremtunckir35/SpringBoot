@@ -1,6 +1,7 @@
 package com.tpe.controller;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDTO;
 import com.tpe.dto.UpdateStudentDTO;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.service.StudentService;
@@ -96,8 +97,8 @@ public class StudentController {
     //response : student + 200
     @GetMapping("/{id}")
     public ResponseEntity<Student> findStudent(@PathVariable("id") Long id){
-        Student foundstudent=service.getStudentById(id);
-        return new ResponseEntity<>(foundstudent,HttpStatus.OK);
+            Student foundstudent=service.getStudentById(id);
+            return new ResponseEntity<>(foundstudent,HttpStatus.OK);
     }
 
     //8-path param ile id si verilen öğrenciyi silme
@@ -117,10 +118,11 @@ public class StudentController {
     //request :http://localhost:8080/students/1 + PUT(yerine koyma)/PATCH(kısmi) + BODY(JSON
     //response:güncelleme, başarılı mesaj + 201
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateStudent(@PathVariable("id") Long id, @Valid @RequestBody UpdateStudentDTO studentDTO){
+    public ResponseEntity<String> updateStudent(@PathVariable("id") Long id,
+                                                @Valid @RequestBody UpdateStudentDTO studentDTO){
 
-        service.updateStudent(id,studentDTO);
-        return new ResponseEntity<>("Student is updated successfully...",HttpStatus.CREATED);//201
+      service.updateStudent(id,studentDTO);
+      return new ResponseEntity<>("Student is updated successfully...",HttpStatus.CREATED);//201
     }
 
 
@@ -151,6 +153,51 @@ public class StudentController {
 
 
     //1 | 2 | 3 | 4 ...next
+
+    //14-grade ile öğrencileri filtreleyelim
+    //request:http://localhost:8080/students/grade/100 + GET
+    //response:grade=100 olan öğrencileri listeleyelim + 200
+    @GetMapping("/grade/{grade}")
+    public ResponseEntity<List<Student>> getAllStudentsByGrade(@PathVariable("grade") Integer grade){
+          List<Student> studentList=service.getStudentsByGrade(grade);
+          return ResponseEntity.ok(studentList);//200
+    }
+
+
+    //ÖDEVVV:
+    //JPA in metodlarını türetme
+    //JPQL/SQL ile custom sorgu
+    //16-lastname ile öğrencileri filtreleyelim
+    // request:http://localhost:8080/students/lastname?lastname=Potter + GET
+    //response : lastname e sahip olan öğrenci listesi + 200
+
+
+    //Meraklısına ÖDEVVV:)isim veya soyisme göre filtreleme
+    //request:http://localhost:8080/students/search?word=harry + GET
+
+
+
+    //17-id'si verilen öğrencinin name,lastname ve grade getirme
+    //request:http://localhost:8080/students/info/2 + GET
+    //response:id'si verilen öğrencinin sadece 3 datasını DTO ile getirelim +200
+    @GetMapping("/info/{id}")
+    public ResponseEntity<StudentDTO> getStudentInfo(@PathVariable Long id){
+        //StudentDTO studentDTO=service.getStudentByIdDto(id);  //18-
+        StudentDTO studentDTO=service.getStudentInfoByDTO(id);  //18-b
+
+        return ResponseEntity.ok(studentDTO);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
