@@ -132,4 +132,13 @@ public class StudentService {
                 orElseThrow(()->new ResourceNotFoundException("Student is not found by id: "+id));
         return studentDTO;
     }
+
+
+    public List<Student> getByKeyword(String word) {
+        return repository.findByNameContainsIgnoreCase(word);
+    }
+
+    public List<Student> getByKeyWordNameOrLastname(String word) {
+        return repository.findByNameOrLastnameContainsIgnoreCase(word,word);
+    }
 }

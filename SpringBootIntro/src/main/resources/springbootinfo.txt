@@ -1,0 +1,46 @@
+/*
+    //1-)spring boot nedir?
+    spring boot spring mvc üzerine inşa edilmiş bir yapıdır
+    gereksiz yapılandırma ve boilerplate kodları ortadan kaldırarak developerlarin
+    direkt olarak iş mantığına odaklanmalarını sağlar
+    otomatik configurasyon yapar ve icerisinde tomcat sunucusu otomatik olarak gelir
+    icerisinde bulunan JPA interface'i sayesinde CRUD yani db işlemleri otomatik olarak gercekleşir
+
+    //2-)Spring Boot'un otomatik yapılandırma (auto-configuration) özelliği nasıl gerçekleşir?
+    @EnableAutoConfiguration ve @Configuration anatasyonları sayesinde bizim mvc icin ya da bir spring projesi icin
+    yapmamız gereken tüm ayarlamalar springde bu anatasyonlar sayesinde gerçekleşiyor
+
+    //3-)Spring Boot projesi başlatmak için hangi adımları izlersiniz?
+    //spring.io gideriz --> gerekli kütüphaneler eklenir(Lombok hangi db kullanılıyorsa o DB icin gerekli kütüphane)
+    --> open file ile projeyi ekleriz -->properties ayarları ve db olusturulur
+    --> proje yapısı olusturulur(packagelar)
+    -->uygulamamızı tamamlayıp calıstırdık
+
+    //4-)application.properties ve application.yml dosyaları arasındaki farklar nelerdir?
+    properties dosyaları key-value yapısında ve tek satırda işlem yapılabiliyor iken
+    yml YAML formatta yapılandırma seviye üzerine yapılandırma sağlar
+    yml daha düzenli bir yapı ister
+
+    //5-)Spring Boot'ta RESTful web servisi nasıl oluşturulur?
+    @RestController anatasyon kullanıcıdan  json formatındaki istekleri yada objesine donusturup
+    gerekli methoda yonlendirerek bu methodun cevabını
+    json formatinda verilen istedigin cevaplanmasını sağlar
+    methodlar ise @GetMapping,@PostMapping.... HTTP methodlari kullanır
+
+    //6-)Spring Boot'ta veri tabanı bağlantısı nasıl yapılır?
+    .properties dosyasındaki key-valuelerle
+    spring.datasource.url=jdbc:postgresql://localhost:5433/library_db
+    spring.datasource.username=techpro
+    spring.datasource.password=password
+    gibi
+    .yml dosyasıda olabilirdi
+
+    //7-)Spring Boot'ta veri tabanı işlemleri nasıl yapılır?
+    JPA interface'i CRUD işlemlerini otomatik olarak yapar
+
+    //8-)CRUD işlemleri dışında bir database işlemi yapmak istersek?
+    https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+    ya bu methodlar kullanılır
+    @Query anatasyonu ile kendi sorgumuzu olustururduk
+
+*/

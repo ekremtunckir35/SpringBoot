@@ -190,7 +190,19 @@ public class StudentController {
 
     //Meraklısına ÖDEVVV:)isim veya soyisme göre filtreleme
     //request:http://localhost:8080/students/search?word=harry + GET
+    @GetMapping("/filter")
+    public ResponseEntity<List<Student>> filterByKeyword(@RequestParam("word") String word) {
+        List<Student> studentList = service.getByKeyword(word);
+        return ResponseEntity.ok(studentList);
+    }
 
+    //Meraklısına ÖDEVVV:)name içinde ".." hecesi ve lastname icinde "sa" geçen öğrencileri filtreleme
+//request:http://localhost:8080/students/filter/like?word=al + GET ex:halil, lale
+    @GetMapping("/filter/like")
+    public ResponseEntity<List<Student>> filterByKeywordNameOrLastname(@RequestParam("word") String word) {
+        List<Student> studentList = service.getByKeyWordNameOrLastname(word);
+        return ResponseEntity.ok(studentList);
+    }
 
 
     //17-id'si verilen öğrencinin name,lastname ve grade getirme
